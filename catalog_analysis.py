@@ -301,6 +301,7 @@ if __name__ == '__main__':
     print("Рейтинг 8.6: " + rating_tier(8.6))
     print("Фильмы 2018 года " + decade_label(2018))
     # Этап 3
+    print("Фильмы, которые НЕ относятся к жанру comedy:")
     print_non_comedy_movies(movies)
     find_first_masterpiece(movies)
     print("Количество фильмов длинее 120 минут: ", count_long_movies(movies))
