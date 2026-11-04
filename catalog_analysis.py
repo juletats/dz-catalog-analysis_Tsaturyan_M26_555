@@ -160,6 +160,24 @@ def format_report_line(movie):
     genres = ", ".join(sorted(movie["genres"]))
     return f'"{title}" ({year}) — {rating}, {duration}, жанры: {genres}'
 
+def titles_sorted_by_rating(movies):
+    """
+        Этап 5. Функция titles_sorted_by_rating(movies), возвращающую список
+        названий фильмов, отсортированных по убыванию рейтинга.
+        """
+    sorted_movies = sorted(movies, key=lambda movie: movie['rating'], reverse=True)
+    return [movie['title'] for movie in sorted_movies]
+
+
+def top_n_by_rating(movies, n=3):
+    """
+        Этап 5. Функция top_n_by_rating(movies, n=3), возвращающую список из n кортежей
+         (title, rating) — топ по рейтингу.
+        [("The Quiet Algorithm", 9.2), ("midnight in oslo", 8.9),
+         ("The Dune Chronicles", 8.6)]
+        """
+    sorted_movies = sorted(movies, key=lambda movie: movie['rating'], reverse=True)
+    return [(movie['title'], movie['rating']) for movie in sorted_movies[:n]]
 
 
 if __name__ == '__main__':
@@ -173,8 +191,11 @@ if __name__ == '__main__':
     # Этап 3
     print("Количество фильмов длинее 120 минут: ", count_long_movies(movies))
     # Этап 4
-    case = "silent hours"
-    print(normalize_title(case))
-    print(make_slug(case))
+    # case = "silent hours"
+    # print(normalize_title(case))
+    # print(make_slug(case))
     print(format_report_line(movies[7]))
+    # Этап 5
+    print(titles_sorted_by_rating(movies))
+    print(top_n_by_rating(movies))
 
