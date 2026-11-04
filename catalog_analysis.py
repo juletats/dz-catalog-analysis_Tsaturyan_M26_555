@@ -217,6 +217,34 @@ def above_average_rating(movies):
             for movie in movies if movie["rating"] > average_rating(movies)}
 
 
+def all_genres(movies):
+    """
+        Этап 7. Функция all_genres(movies), возвращающую
+        множество всех уникальных жанров каталога
+        """
+    genres = set()
+    for movie in movies:
+        genres |= movie["genres"]
+    return genres
+
+
+def common_actors(movie1, movie2):
+    """
+        Этап 7. Функция common_actors(movie1, movie2),
+         возвращающую множество актеров, снимавшихся в обоих фильмах.
+        """
+    return set(movie1["actors"]) & set(movie2["actors"])
+
+
+def genres_only_in_one(movies_a, movies_b):
+    """
+        Этап 7. Функция genres_only_in_one(movies_a, movies_b),
+        которая возвращает жанры, встречающиеся в movies_a,
+        но не встречающиеся в movies_b.
+        """
+    return all_genres(movies_a) - all_genres(movies_b)
+
+
 if __name__ == '__main__':
     # Этап 1
     print("Средний рейтинг:", average_rating(movies))
@@ -239,3 +267,7 @@ if __name__ == '__main__':
     print(count_by_genre(movies))
     print(actor_filmography(movies))
     print("Фильмы с рейтингом выше среднего: ", above_average_rating(movies))
+    # Этап 7
+    print(all_genres(movies))
+    print(common_actors(movies[0], movies[3]))
+    print(genres_only_in_one(movies[5:6], movies[:5]))
