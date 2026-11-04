@@ -263,6 +263,35 @@ def duration_above_threshold_sum(movies, threshold=7.0):
     return sum(movie["duration_min"] for movie in movies if movie["rating"] > threshold)
 
 
+def build_report(movies):
+    """
+        Этап 9. Функция build_report(movies), которая объединяет результаты всех
+        предыдущих этапов в единый консольный отчет: общую статистику, топ-3 фильма,
+        количество фильмов по каждому жанру и полный список уникальных жанров каталога.
+    """
+    print("ОТЧЕТ ПО КАТАЛОГУ")
+    average_age = catalog_age_stats(movies)[2]
+    print(f"Средний рейтинг: {average_rating(movies)}")
+    print(f"Средний возраст фильмов: {average_age} лет")
+    print()
+
+    by_title = {movie["title"]: movie for movie in movies}
+    print("Топ-3 фильма:")
+    for title, rating in top_n_by_rating(movies, 3):
+        print("  " + format_report_line(by_title[title]))
+    print()
+
+    print("Фильмов по жанрам:")
+    counts = count_by_genre(movies)
+    sorted_genres = sorted(counts.items(), key=lambda item: item[1], reverse=True)
+    for genre, number in sorted_genres:
+        print(f" {genre} — {number}")
+    print()
+
+    genre_line = ", ".join(sorted(all_genres(movies)))
+    print(f"Все жанры каталога: {genre_line}")
+
+
 if __name__ == '__main__':
     # Этап 1
     print("Средний рейтинг:", average_rating(movies))
@@ -293,3 +322,6 @@ if __name__ == '__main__':
     for movie in iter_high_rated(movies):
         print(format_report_line(movie))
     print(duration_above_threshold_sum(movies))
+    print()
+    # Этап 9
+    build_report(movies)
