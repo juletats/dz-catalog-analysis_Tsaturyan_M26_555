@@ -122,6 +122,45 @@ def count_long_movies(movies, threshold=120):
             result += 1
     return result
 
+def normalize_title(title):
+    """
+        Этап 4. Функция normalize_title(title), которая приводит строку к формату
+        Title Case (каждое слово с заглавной буквы) без использования str.title()
+        напрямую: разбейте строку по пробелам и соберите заново вручную,
+        меняя первуюбукву каждого слова
+        через срез (word[0].upper() + word[1:]).
+        """
+    words = title.split()
+    result = []
+    for word in words:
+        if word:
+            result.append(word[0].upper() + word[1:])
+    return " ".join(result)
+
+
+def make_slug(title):
+    """
+        Этап 4. Функция make_slug(title), которая превращает нормализованное
+         название в «слаг» вида the-quiet-algorithm.
+        """
+    normalized = normalize_title(title)
+    return normalized.replace(" ", "-").lower()
+
+
+def format_report_line(movie):
+    """
+        Этап 4. Функция format_report_line(movie), возвращающую единую строку
+        с описанием фильма:
+        "The Quiet Algorithm" (2024) — 9.2/10, 1ч 58м, жанры: drama, sci-fi
+        """
+    title = normalize_title(movie['title'])
+    year = movie['year']
+    rating = str(movie['rating']) + '/10'
+    duration = duration_in_hours(movie['duration_min'])
+    genres = ", ".join(sorted(movie["genres"]))
+    return f'"{title}" ({year}) — {rating}, {duration}, жанры: {genres}'
+
+
 
 if __name__ == '__main__':
     # Этап 1
@@ -132,7 +171,10 @@ if __name__ == '__main__':
     print("Рейтинг 8.6: " + rating_tier(8.6))
     print("Фильмы 2018 года " + decade_label(2018))
     # Этап 3
-    print("Фильмы, которые не относятся к жанру комедия:")
-    print_non_comedy_movies(movies)
-    find_first_masterpiece(movies)
     print("Количество фильмов длинее 120 минут: ", count_long_movies(movies))
+    # Этап 4
+    case = "silent hours"
+    print(normalize_title(case))
+    print(make_slug(case))
+    print(format_report_line(movies[7]))
+
