@@ -122,6 +122,7 @@ def count_long_movies(movies, threshold=120):
             result += 1
     return result
 
+
 def normalize_title(title):
     """
         Этап 4. Функция normalize_title(title), которая приводит строку к формату
@@ -160,6 +161,7 @@ def format_report_line(movie):
     genres = ", ".join(sorted(movie["genres"]))
     return f'"{title}" ({year}) — {rating}, {duration}, жанры: {genres}'
 
+
 def titles_sorted_by_rating(movies):
     """
         Этап 5. Функция titles_sorted_by_rating(movies), возвращающую список
@@ -180,6 +182,41 @@ def top_n_by_rating(movies, n=3):
     return [(movie['title'], movie['rating']) for movie in sorted_movies[:n]]
 
 
+def count_by_genre(movies):
+    """
+        Этап 6. Функция count_by_genre(movies), возвращающую словарь
+        {жанр: количество фильмов}, построенный вручную
+        через цикл и метод dict.get() (без Counter).
+        """
+    result = {}
+    for movie in movies:
+        for genre in movie['genres']:
+            result[genre] = result.get(genre, 0) + 1
+    return result
+
+
+def actor_filmography(movies):
+    """
+        Этап 6. Функция  actor_filmography(movies),
+        возвращающую словарь {актер: [список названий фильмов]}.
+        """
+    result = {}
+    for movie in movies:
+        for actor in movie['actors']:
+            result.setdefault(actor, []).append(movie['title'])
+    return result
+
+
+def above_average_rating(movies):
+    """
+        Этап 6. С помощью генератора словаря (dict comprehension)
+        постройте словарь {title: rating} только для фильмов с рейтингом
+        выше среднего (используйте average_rating из этапа 1).
+        """
+    return {movie["title"]: movie["rating"]
+            for movie in movies if movie["rating"] > average_rating(movies)}
+
+
 if __name__ == '__main__':
     # Этап 1
     print("Средний рейтинг:", average_rating(movies))
@@ -198,4 +235,7 @@ if __name__ == '__main__':
     # Этап 5
     print(titles_sorted_by_rating(movies))
     print(top_n_by_rating(movies))
-
+    # Этап 6
+    print(count_by_genre(movies))
+    print(actor_filmography(movies))
+    print("Фильмы с рейтингом выше среднего: ", above_average_rating(movies))
