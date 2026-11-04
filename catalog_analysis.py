@@ -54,7 +54,42 @@ def duration_in_hours(minutes):
     return f"{hours}ч {minutes}м"
 
 
+def rating_tier(rating):
+    """
+    Этап 2. Функция rating_tier(rating), которая по оценке возвращает категорию:
+    "шедевр" (≥9), "хорошо" (7–8.9), "средне" (5–6.9), "слабо" (<5).
+    """
+    if rating >= 9:
+        return "шедевр"
+    elif 7 <= rating <= 8.9:
+        return "хорошо"
+    return "слабо" if rating < 5 else "средне"
+
+
+def decade_label(year):
+    """
+    Этап 2. Функция decade_label(year), которая через оператор match возвращает
+    метку "новые" (после 2020), "недавние" (2015–2020) или "старые" (раньше 2015).
+    """
+    match year:
+        case _ if year > 2020:
+            return "новые"
+        case _ if 2015 <= year <= 2020:
+            return "недавние"
+        case _:
+            return "старые"
+
+
 if __name__ == '__main__':
+    # Этап 1
     print("Средний рейтинг:", average_rating(movies))
     print("Средний возраст фильмов: " + str(catalog_age_stats(movies)[2]) + " лет")
     print("134 мин = " + duration_in_hours(134))
+    # Этап 2
+    print("Рейтинг 8.6: " + rating_tier(8.6))
+    print("Рейтинг 5.6: " + rating_tier(5.6))
+    print("Рейтинг 3.6: " + rating_tier(3.6))
+    print("Рейтинг 9.6: " + rating_tier(9.6))
+    print("Фильмы 2018 года " + decade_label(2018))
+    print("Фильмы 1998 года " + decade_label(1998))
+    print("Фильмы 2022 года " + decade_label(2022))
