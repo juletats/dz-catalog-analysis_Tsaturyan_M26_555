@@ -245,6 +245,24 @@ def genres_only_in_one(movies_a, movies_b):
     return all_genres(movies_a) - all_genres(movies_b)
 
 
+def iter_high_rated(movies, min_rating=8.0):
+    """
+        Этап 8. Функция-генератор iter_high_rated(movies, min_rating=8.0),
+        которая через yield лениво отдает фильмы с рейтингом не ниже min_rating
+        """
+    for movie in movies:
+        if movie["rating"] >= min_rating:
+            yield movie
+
+
+def duration_above_threshold_sum(movies, threshold=7.0):
+    """
+        Этап 8. Генераторное выражение, которое считает суммарную
+        длительность всех фильмов с рейтингом выше 7 в минутах, и передает его в sum()
+    """
+    return sum(movie["duration_min"] for movie in movies if movie["rating"] > threshold)
+
+
 if __name__ == '__main__':
     # Этап 1
     print("Средний рейтинг:", average_rating(movies))
@@ -271,3 +289,7 @@ if __name__ == '__main__':
     print(all_genres(movies))
     print(common_actors(movies[0], movies[3]))
     print(genres_only_in_one(movies[5:6], movies[:5]))
+    # Этап 8
+    for movie in iter_high_rated(movies):
+        print(format_report_line(movie))
+    print(duration_above_threshold_sum(movies))
