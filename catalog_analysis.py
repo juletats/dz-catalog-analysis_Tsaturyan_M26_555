@@ -80,6 +80,49 @@ def decade_label(year):
             return "старые"
 
 
+def print_non_comedy_movies(movies):
+    """
+       Этап 3. С помощью for и continue выведите на экран (print) названия
+        всех фильмов, которые НЕ относятся к жанру "comedy".
+       """
+    for movie in movies:
+        if "comedy" not in movie['genres']:
+            print(movie['title'])
+        else:
+            continue
+
+
+def find_first_masterpiece(movies):
+    """
+        Этап 3. С помощью while и break найдите первый по порядку в списке фильм
+        с рейтингом выше 9.0; если такого фильма нет, цикл должен
+        завершиться веткой else с сообщением "Шедевров не найдено".
+        """
+    i = 0
+    while i < len(movies):
+        if movies[i]['rating'] > 9.0:
+            print("Первый шедевр:", movies[i]['title'])
+            break  # нашли -- прерываемся, ветка else не выполнится
+        i += 1
+    else:
+        # сработает только если цикл завершился без break
+        print("Шедевров не найдено")
+        return None
+    return movies[i]
+
+
+def count_long_movies(movies, threshold=120):
+    """
+        Этап 3. Функция count_long_movies(movies, threshold=120), которая через for с
+        накопительной переменной считает количество фильмов длиннее threshold минут.
+        """
+    result = 0
+    for movie in movies:
+        if movie['duration_min'] > threshold:
+            result += 1
+    return result
+
+
 if __name__ == '__main__':
     # Этап 1
     print("Средний рейтинг:", average_rating(movies))
@@ -87,9 +130,9 @@ if __name__ == '__main__':
     print("134 мин = " + duration_in_hours(134))
     # Этап 2
     print("Рейтинг 8.6: " + rating_tier(8.6))
-    print("Рейтинг 5.6: " + rating_tier(5.6))
-    print("Рейтинг 3.6: " + rating_tier(3.6))
-    print("Рейтинг 9.6: " + rating_tier(9.6))
     print("Фильмы 2018 года " + decade_label(2018))
-    print("Фильмы 1998 года " + decade_label(1998))
-    print("Фильмы 2022 года " + decade_label(2022))
+    # Этап 3
+    print("Фильмы, которые не относятся к жанру комедия:")
+    print_non_comedy_movies(movies)
+    find_first_masterpiece(movies)
+    print("Количество фильмов длинее 120 минут: ", count_long_movies(movies))
