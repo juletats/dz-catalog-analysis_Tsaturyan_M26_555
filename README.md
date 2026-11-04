@@ -9,7 +9,7 @@
 ## Запуск
 
 ```bash
-uv sync                  # установить зависимости
-uv run catalog_analysis.py   # запустить отчет
-uv run ruff check .          # проверка стиля
+uv sync
+uv run catalog_analysis.py
+uv run ruff check .          
 ```
